@@ -2268,6 +2268,15 @@
 								],
 								"type": "text/javascript"
 							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"postman.setNextRequest(\"/chong-zhi/recharge/history (new)\");"
+								],
+								"type": "text/javascript"
+							}
 						}
 					],
 					"protocolProfileBehavior": {
@@ -3062,6 +3071,15 @@
 								],
 								"type": "text/javascript"
 							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
 						}
 					],
 					"request": {
@@ -3180,7 +3198,7 @@
 								{
 									"key": "file",
 									"type": "file",
-									"src": "/C:/Users/Lenovo/Desktop/New folder/postman.jpg"
+									"src": "/C:/Users/Lenovo/Desktop/postman.jpg"
 								},
 								{
 									"key": "recharge_id",
@@ -5885,7 +5903,7 @@
 									"listen": "prerequest",
 									"script": {
 										"exec": [
-											""
+											"postman.setNextRequest(\"hui-yuan/default/huo-qu-xin-xi\");"
 										],
 										"type": "text/javascript"
 									}
