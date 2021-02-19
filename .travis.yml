@@ -5,5 +5,10 @@ node_js:
 install:
   - npm install newman
 
+before script:
+  - node --version
+  - npm --version
+  - node_modules/.bin/newman --version
+
 script:
   - node_modules/.bin/newman run tests/Frontend_Calls.postman_collection.json -e tests/aliyun_staging.postman_environment.json 
