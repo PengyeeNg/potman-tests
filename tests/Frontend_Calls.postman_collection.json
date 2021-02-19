@@ -2265,7 +2265,7 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									""
+									"postman.setNextRequest(\"/chong-zhi/recharge/history (new)\");"
 								],
 								"type": "text/javascript"
 							}
@@ -3068,7 +3068,7 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									""
+									"postman.setNextRequest(\"chong-zhi/activity/list\");"
 								],
 								"type": "text/javascript"
 							}
@@ -5887,7 +5887,7 @@
 									"listen": "prerequest",
 									"script": {
 										"exec": [
-											""
+											"postman.setNextRequest(\"hui-yuan/default/huo-qu-xin-xi\");"
 										],
 										"type": "text/javascript"
 									}
