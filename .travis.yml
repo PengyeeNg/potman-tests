@@ -15,9 +15,9 @@ before_script:
 script:
   - node_modules/.bin/newman run tests/Frontend_Calls.postman_collection.json -e tests/aliyun_staging.postman_environment.json
 
-deploy:
-  provider: script
-  github_token: $github_token
-  local_dir: build
-  on:
-    branch: master
+# deploy:
+  # provider: script
+  # github_token: $github_token
+  # local_dir: build
+  # on:
+    # branch: master
