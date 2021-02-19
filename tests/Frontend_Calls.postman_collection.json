@@ -219,14 +219,8 @@
 									"            \"bian_hao\": {\r",
 									"              \"type\": \"string\"\r",
 									"            },\r",
-									"            \"ni_cheng\": {\r",
-									"              \"type\": \"string\"\r",
-									"            },\r",
 									"            \"xing_ming\": {\r",
 									"              \"type\": \"string\"\r",
-									"            },\r",
-									"            \"tou_xiang\": {\r",
-									"              \"type\": \"null\"\r",
 									"            },\r",
 									"            \"tui_jian_ren\": {\r",
 									"              \"type\": \"string\"\r",
@@ -256,9 +250,7 @@
 									"          \"required\": [\r",
 									"            \"access_token\",\r",
 									"            \"bian_hao\",\r",
-									"            \"ni_cheng\",\r",
 									"            \"xing_ming\",\r",
-									"            \"tou_xiang\",\r",
 									"            \"tui_jian_ren\",\r",
 									"            \"re_nums\",\r",
 									"            \"zhang_hu_1\",\r",
@@ -2273,7 +2265,7 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									"postman.setNextRequest(\"/chong-zhi/recharge/history (new)\");"
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -3076,7 +3068,7 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									"postman.setNextRequest(\"chong-zhi/activity/list\");"
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -5903,7 +5895,7 @@
 									"listen": "prerequest",
 									"script": {
 										"exec": [
-											"postman.setNextRequest(\"hui-yuan/default/huo-qu-xin-xi\");"
+											""
 										],
 										"type": "text/javascript"
 									}
