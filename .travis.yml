@@ -11,4 +11,4 @@ before script:
   - node_modules/.bin/newman --version
 
 script:
-  - node_modules/.bin/newman run tests/Frontend_Calls.postman_collection.json -e tests/aliyun_staging.postman_environment.json --reporters html --reporter-html-export C:\postman\collection\Report\APITestResult_%date%.html
+  - node_modules/.bin/newman run tests/Frontend_Calls.postman_collection.json -e tests/aliyun_staging.postman_environment.json
