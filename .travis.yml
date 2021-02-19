@@ -1,0 +1,9 @@
+language: node_js
+node_js:
+  - '14.15.5'
+
+install:
+  - npm install newman
+
+script:
+  - node_modules/.bin/newman run tests/Frontend_Calls.postman_collection.json -e tests/aliyun_staging.postman_environment.json
