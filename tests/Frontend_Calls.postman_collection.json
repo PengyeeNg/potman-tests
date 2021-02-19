@@ -3076,7 +3076,7 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									""
+									"postman.setNextRequest(\"chong-zhi/activity/list\");"
 								],
 								"type": "text/javascript"
 							}
