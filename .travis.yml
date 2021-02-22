@@ -2,9 +2,7 @@ language: node_js
 node_js:
   - '14.15.5'
 dist: trusty
-os: windows 
-
-if: type == pull_request
+os: windows
 
 install:
   - npm install newman
