@@ -2,7 +2,7 @@ language: node_js
 node_js:
   - '14.15.5'
 dist: trusty
-os: windows 
+os: windows
 
 install:
   - npm install newman
