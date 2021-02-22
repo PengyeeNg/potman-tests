@@ -4,6 +4,8 @@ node_js:
 dist: trusty
 os: windows 
 
+if: (type == push) OR (type == pull_request AND fork == true)
+
 install:
   - npm install newman
 
