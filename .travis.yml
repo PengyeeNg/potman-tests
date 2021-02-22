@@ -4,8 +4,6 @@ node_js:
 dist: trusty
 os: windows 
 
-if: type == pull_request
-
 install:
   - npm install newman
 
