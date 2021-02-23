@@ -3,7 +3,9 @@ node_js:
   - '14.15.5'
 dist: trusty
 os: windows
-cd: C:\Users\Lenovo\postmanci
+cache:
+    directories:
+     - C:\Users\Lenovo
 
 install:
   - npm install newman
