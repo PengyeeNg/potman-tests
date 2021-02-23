@@ -18,3 +18,6 @@ test-1136
 test-1144
 test-1154
 test-1200
+test-0337
+test-434
+test-439

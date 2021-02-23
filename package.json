@@ -1,6 +1,6 @@
 {
   "name": "postmanci",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Postman test for CI",
   "main": "index.js",
   "directories": {
@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/PengyeeNg/potman-tests/issues"
   },
-  "homepage": "https://github.com/PengyeeNg/potman-tests#readme"
+  "homepage": "https://github.com/PengyeeNg/potman-tests#readme",
+  "dependencies": {
+    "newman": "^5.2.2"
+  }
 }
