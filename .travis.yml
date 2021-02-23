@@ -9,7 +9,7 @@ cache:
     - /C:/Users/Lenovo/postmanci/node_modules
 
 install:
-  - npm install -g newman
+  - npm install newman
 
 #before_script:
   #- node --version
