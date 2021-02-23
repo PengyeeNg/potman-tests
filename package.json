@@ -1,6 +1,6 @@
 {
   "name": "postmanci",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Postman test for CI",
   "main": "index.js",
   "directories": {
