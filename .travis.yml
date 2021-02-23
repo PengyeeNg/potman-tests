@@ -5,7 +5,7 @@ node_js:
 os: windows
 
 before_install:
-  - npm install -g
+  - npm install -g @angular/cli
   - npm init -y
 
 install:
