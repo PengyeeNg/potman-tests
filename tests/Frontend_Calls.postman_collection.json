@@ -3575,7 +3575,8 @@
 								{
 									"key": "file",
 									"type": "file",
-									"src": "C:\\Users\\Lenovo\\postmanci\\tests\\postman.jpg"
+									"enabled": true,
+									"src": "postman.jpg"
 								},
 								{
 									"key": "recharge_id",
