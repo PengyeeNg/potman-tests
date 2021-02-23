@@ -5,7 +5,7 @@ node_js:
 os: windows
 
 before_install:
-  - npm init -f
+  - npm init -y
 
 install:
   - npm install newman
