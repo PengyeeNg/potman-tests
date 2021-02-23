@@ -5,7 +5,7 @@ dist: trusty
 os: windows
 
 install:
-  - cd C:\Users\Lenovo\postmanci
+  - npm init
   - npm install newman
 
 #before_script:
