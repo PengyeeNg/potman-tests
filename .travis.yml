@@ -5,6 +5,7 @@ node_js:
 os: windows
 
 before_install:
+  - npm install -g
   - npm init -y
 
 install:
