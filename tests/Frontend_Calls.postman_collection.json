@@ -3573,10 +3573,9 @@
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "file",
+									"key": "FILE_POSTMAN",
 									"type": "file",
-									"enabled": true,
-									"src": "postman.jpg"
+									"src": "FILE_POSTMAN"
 								},
 								{
 									"key": "recharge_id",
