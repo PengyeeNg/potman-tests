@@ -3,6 +3,9 @@ node_js:
   - '14.15.5'
 #dist: trusty
 os: windows
+cache:
+    directories:
+     - C:\Users\Lenovo
 
 install:
   - npm install newman
