@@ -4,6 +4,9 @@ node_js:
 #dist: trusty
 os: windows
 
+cache:
+  directories:
+    - node_modules
 
 install:
   - npm install newman
