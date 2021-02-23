@@ -6,7 +6,7 @@ os: windows
 
 cache:
   directories:
-    - node_modules
+    - /C:/Users/Lenovo/postmanci/node_modules
 
 install:
   - npm install newman
