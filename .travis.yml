@@ -1,7 +1,7 @@
 language: node_js
 node_js:
   - '14.15.5'
-dist: trusty
+#dist: trusty
 os: windows
 cd: C:\Users\Lenovo\postmanci
 
