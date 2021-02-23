@@ -1409,6 +1409,355 @@
 			]
 		},
 		{
+			"name": "Member Profile",
+			"item": [
+				{
+					"name": "Activity",
+					"item": [
+						{
+							"name": "chong-zhi/activity/list",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"if (pm.response.code === 200) {\r",
+											"// Test Flow Validation\r",
+											"var jsonData = pm.response.json();\r",
+											"if (jsonData.errcode === 0){\r",
+											"//Positive Flow\r",
+											"pm.test(\"Test pass with positive flow\", () =>{\r",
+											"    pm.expect(jsonData.msg).to.eql(\"success\");\r",
+											"})\r",
+											"}\r",
+											"else if (jsonData.errcode === 1){\r",
+											"//Negative Flow\r",
+											"pm.test(\"ERROR: negative flow detected\", () =>{\r",
+											"    pm.expect(jsonData.msg).to.eql(\"success\");\r",
+											"})\r",
+											"}\r",
+											"// TEST CASE 1: Schema Validation\r",
+											"//Check the schema for positive flow\r",
+											"var schemapositive =\r",
+											"{\r",
+											"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
+											"  \"type\": \"object\",\r",
+											"  \"properties\": {\r",
+											"    \"errcode\": {\r",
+											"      \"type\": \"integer\"\r",
+											"    },\r",
+											"    \"msg\": {\r",
+											"      \"type\": \"string\"\r",
+											"    },\r",
+											"    \"data\": {\r",
+											"      \"type\": \"array\",\r",
+											"      \"items\": [\r",
+											"        {\r",
+											"          \"type\": \"object\",\r",
+											"          \"properties\": {\r",
+											"            \"id\": {\r",
+											"              \"type\": \"integer\"\r",
+											"            },\r",
+											"            \"title\": {\r",
+											"              \"type\": \"string\"\r",
+											"            },\r",
+											"            \"memo\": {\r",
+											"              \"type\": \"string\"\r",
+											"            },\r",
+											"            \"min_money\": {\r",
+											"              \"type\": \"string\"\r",
+											"            },\r",
+											"            \"max_money\": {\r",
+											"              \"type\": \"string\"\r",
+											"            }\r",
+											"          },\r",
+											"          \"required\": [\r",
+											"            \"id\",\r",
+											"            \"title\",\r",
+											"            \"memo\",\r",
+											"            \"min_money\",\r",
+											"            \"max_money\"\r",
+											"          ]\r",
+											"        },\r",
+											"        {\r",
+											"          \"type\": \"object\",\r",
+											"          \"properties\": {\r",
+											"            \"id\": {\r",
+											"              \"type\": \"integer\"\r",
+											"            },\r",
+											"            \"title\": {\r",
+											"              \"type\": \"string\"\r",
+											"            },\r",
+											"            \"memo\": {\r",
+											"              \"type\": \"string\"\r",
+											"            },\r",
+											"            \"min_money\": {\r",
+											"              \"type\": \"string\"\r",
+											"            },\r",
+											"            \"max_money\": {\r",
+											"              \"type\": \"string\"\r",
+											"            }\r",
+											"          },\r",
+											"          \"required\": [\r",
+											"            \"id\",\r",
+											"            \"title\",\r",
+											"            \"memo\",\r",
+											"            \"min_money\",\r",
+											"            \"max_money\"\r",
+											"          ]\r",
+											"        }\r",
+											"      ]\r",
+											"    }\r",
+											"  },\r",
+											"  \"required\": [\r",
+											"    \"errcode\",\r",
+											"    \"msg\",\r",
+											"    \"data\"\r",
+											"  ]\r",
+											"}\r",
+											"var json = pm.response.json()\r",
+											"pm.test(\"Schema for positive flow is valid\", function(){\r",
+											"    var result =tv4.validateMultiple(json, schemapositive);\r",
+											"    //console.log(\"Schema Validation:\", JSON.stringify(result));\r",
+											"    //console.log(\"Schema Validation:\",result);\r",
+											"    for(var i =0; i<result.errors.length;i++){\r",
+											"        console.log(\" ERROR :\"+ result.errors[i].message, \"\\n\", \" SCHEMA PATH :\"+ result.errors[i].schemaPath, \"\\n\", \" DATA PATH :\"+ result.errors[i].dataPath);    \r",
+											"    }\r",
+											"    pm.expect(tv4.validate(json, schemapositive)).to.be.true;\r",
+											"}\r",
+											")\r",
+											"//Store member bank id as variable\r",
+											"var jsonData = JSON.parse(responseBody);\r",
+											"pm.environment.set(\"activityid\", jsonData.data[0][\"id\"]);\r",
+											"}\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{evo_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept-Language",
+										"value": "en",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{FC_hostname}}/chong-zhi/activity/list",
+									"host": [
+										"{{FC_hostname}}"
+									],
+									"path": [
+										"chong-zhi",
+										"activity",
+										"list"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Update Profile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {\r",
+									"// Test Flow Validation\r",
+									"var jsonData = pm.response.json();\r",
+									"if (jsonData.errcode === 0){\r",
+									"//Positive Flow\r",
+									"pm.test(\"Test pass with positive flow\", () =>{\r",
+									"    pm.expect(jsonData.msg).to.eql(\"success\");\r",
+									"})\r",
+									"}\r",
+									"else if (jsonData.errcode === 1){\r",
+									"//Negative Flow\r",
+									"pm.test(\"ERROR: negative flow detected\", () =>{\r",
+									"    pm.expect(jsonData.msg).to.eql(\"success\");\r",
+									"})\r",
+									"}\r",
+									"// TEST CASE 1: Schema Validation\r",
+									"//Check the schema for positive flow\r",
+									"var schemapositive =\r",
+									"{\r",
+									"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
+									"  \"type\": \"object\",\r",
+									"  \"properties\": {\r",
+									"    \"errcode\": {\r",
+									"      \"type\": \"integer\"\r",
+									"    },\r",
+									"    \"msg\": {\r",
+									"      \"type\": \"string\"\r",
+									"    },\r",
+									"    \"data\": {\r",
+									"      \"type\": \"object\",\r",
+									"      \"properties\": {\r",
+									"        \"user\": {\r",
+									"          \"type\": \"object\",\r",
+									"          \"properties\": {\r",
+									"            \"access_token\": {\r",
+									"              \"type\": \"string\"\r",
+									"            },\r",
+									"            \"bian_hao\": {\r",
+									"              \"type\": \"string\"\r",
+									"            },\r",
+									"            \"xing_ming\": {\r",
+									"              \"type\": \"string\"\r",
+									"            },\r",
+									"            \"tui_jian_ren\": {\r",
+									"              \"type\": \"string\"\r",
+									"            },\r",
+									"            \"re_nums\": {\r",
+									"              \"type\": \"integer\"\r",
+									"            },\r",
+									"            \"zhang_hu_1\": {\r",
+									"              \"type\": \"string\"\r",
+									"            },\r",
+									"            \"zhang_hu_2\": {\r",
+									"              \"type\": \"string\"\r",
+									"            },\r",
+									"            \"zhang_hu_3\": {\r",
+									"              \"type\": \"string\"\r",
+									"            },\r",
+									"            \"shou_ji\": {\r",
+									"              \"type\": \"string\"\r",
+									"            },\r",
+									"            \"email\": {\r",
+									"              \"type\": \"string\"\r",
+									"            },\r",
+									"            \"is_daili\": {\r",
+									"              \"type\": \"integer\"\r",
+									"            }\r",
+									"          },\r",
+									"          \"required\": [\r",
+									"            \"access_token\",\r",
+									"            \"bian_hao\",\r",
+									"            \"xing_ming\",\r",
+									"            \"tui_jian_ren\",\r",
+									"            \"re_nums\",\r",
+									"            \"zhang_hu_1\",\r",
+									"            \"zhang_hu_2\",\r",
+									"            \"zhang_hu_3\",\r",
+									"            \"shou_ji\",\r",
+									"            \"email\",\r",
+									"            \"is_daili\"\r",
+									"          ]\r",
+									"        }\r",
+									"      },\r",
+									"      \"required\": [\r",
+									"        \"user\"\r",
+									"      ]\r",
+									"    }\r",
+									"  },\r",
+									"  \"required\": [\r",
+									"    \"errcode\",\r",
+									"    \"msg\",\r",
+									"    \"data\"\r",
+									"  ]\r",
+									"}\r",
+									"var json = pm.response.json()\r",
+									"pm.test(\"Schema for positive flow is valid\", function(){\r",
+									"    var result =tv4.validateMultiple(json, schemapositive);\r",
+									"    //console.log(\"Schema Validation:\", JSON.stringify(result));\r",
+									"    //console.log(\"Schema Validation:\",result);\r",
+									"    for(var i =0; i<result.errors.length;i++){\r",
+									"        console.log(\" ERROR :\"+ result.errors[i].message, \"\\n\", \" SCHEMA PATH :\"+ result.errors[i].schemaPath, \"\\n\", \" DATA PATH :\"+ result.errors[i].dataPath);    \r",
+									"    }\r",
+									"    pm.expect(tv4.validate(json, schemapositive)).to.be.true;\r",
+									"}\r",
+									")\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{evo_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"UpdateProfile\": {\r\n\t\t\"xing_ming\": \"playerA\",\r\n\t\t\"shou_ji\": \"{{$randomPhoneNumber}}\",\r\n\t\t\"email\": \"{{$randomEmail}}\"\r\n\t}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{FC_hostname}}/hui-yuan/default/update-profile",
+							"host": [
+								"{{FC_hostname}}"
+							],
+							"path": [
+								"hui-yuan",
+								"default",
+								"update-profile"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
 			"name": "Deposit",
 			"item": [
 				{
@@ -2265,7 +2614,7 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									"postman.setNextRequest(\"/chong-zhi/recharge/history (new)\");"
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -2319,16 +2668,52 @@
 									"if (jsonData.errcode === 0){\r",
 									"//Positive Flow\r",
 									"pm.test(\"Test pass with positive flow\", () =>{\r",
-									"    pm.expect(jsonData.msg).to.eql(\"success\");\r",
+									"    pm.expect(jsonData.msg).to.eql(\"提交成功\");\r",
 									"})\r",
 									"}\r",
 									"else if (jsonData.errcode === 1){\r",
 									"//Negative Flow\r",
 									"pm.test(\"ERROR: negative flow detected\", () =>{\r",
-									"    pm.expect(jsonData.msg).to.eql(\"success\");\r",
+									"    pm.expect(jsonData.msg).to.eql(\"提交成功\");\r",
 									"})\r",
 									"}\r",
-									"}"
+									"// TEST CASE 1: Schema Validation\r",
+									"//Check the schema for positive flow\r",
+									"var schemapositive =\r",
+									"{\r",
+									"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
+									"  \"type\": \"object\",\r",
+									"  \"properties\": {\r",
+									"    \"errcode\": {\r",
+									"      \"type\": \"integer\"\r",
+									"    },\r",
+									"    \"msg\": {\r",
+									"      \"type\": \"string\"\r",
+									"    },\r",
+									"    \"data\": {\r",
+									"      \"type\": \"array\",\r",
+									"      \"items\": {}\r",
+									"    }\r",
+									"  },\r",
+									"  \"required\": [\r",
+									"    \"errcode\",\r",
+									"    \"msg\",\r",
+									"    \"data\"\r",
+									"  ]\r",
+									"}\r",
+									"var json = pm.response.json()\r",
+									"pm.test(\"Schema for positive flow is valid\", function(){\r",
+									"    var result =tv4.validateMultiple(json, schemapositive);\r",
+									"    //console.log(\"Schema Validation:\", JSON.stringify(result));\r",
+									"    //console.log(\"Schema Validation:\",result);\r",
+									"    for(var i =0; i<result.errors.length;i++){\r",
+									"        console.log(\" ERROR :\"+ result.errors[i].message, \"\\n\", \" SCHEMA PATH :\"+ result.errors[i].schemaPath, \"\\n\", \" DATA PATH :\"+ result.errors[i].dataPath);    \r",
+									"    }\r",
+									"    pm.expect(tv4.validate(json, schemapositive)).to.be.true;\r",
+									"}\r",
+									")\r",
+									"}\r",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -2349,7 +2734,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n\t\"Recharge\": {\r\n\t\t\"deposit_money\": 10000,\r\n\t\t\"bank_id\": 18,\r\n        \"activityId\": 14\r\n\t}\r\n}",
+							"raw": "{\r\n\t\"Recharge\": {\r\n\t\t\"deposit_money\": 1111,\r\n\t\t\"bank_id\": 18,\r\n        \"activityId\": {{activityid}}\r\n\t}\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3068,7 +3453,7 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									"postman.setNextRequest(\"chong-zhi/activity/list\");"
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -3190,7 +3575,7 @@
 								{
 									"key": "file",
 									"type": "file",
-									"src": "C:/Users/Lenovo/postmanci/tests/postman.jpg"
+									"src": "/C:/Users/Lenovo/postmanci/tests/postman.jpg"
 								},
 								{
 									"key": "recharge_id",
@@ -3208,352 +3593,6 @@
 								"chong-zhi",
 								"recharge",
 								"upload"
-							]
-						}
-					},
-					"response": []
-				}
-			],
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"type": "text/javascript",
-						"exec": [
-							""
-						]
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"type": "text/javascript",
-						"exec": [
-							""
-						]
-					}
-				}
-			]
-		},
-		{
-			"name": "Member Profile",
-			"item": [
-				{
-					"name": "Activity",
-					"item": [
-						{
-							"name": "chong-zhi/activity/list",
-							"event": [
-								{
-									"listen": "prerequest",
-									"script": {
-										"exec": [
-											""
-										],
-										"type": "text/javascript"
-									}
-								},
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"if (pm.response.code === 200) {\r",
-											"// Test Flow Validation\r",
-											"var jsonData = pm.response.json();\r",
-											"if (jsonData.errcode === 0){\r",
-											"//Positive Flow\r",
-											"pm.test(\"Test pass with positive flow\", () =>{\r",
-											"    pm.expect(jsonData.msg).to.eql(\"success\");\r",
-											"})\r",
-											"}\r",
-											"else if (jsonData.errcode === 1){\r",
-											"//Negative Flow\r",
-											"pm.test(\"ERROR: negative flow detected\", () =>{\r",
-											"    pm.expect(jsonData.msg).to.eql(\"success\");\r",
-											"})\r",
-											"}\r",
-											"// TEST CASE 1: Schema Validation\r",
-											"//Check the schema for positive flow\r",
-											"var schemapositive =\r",
-											"{\r",
-											"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
-											"  \"type\": \"object\",\r",
-											"  \"properties\": {\r",
-											"    \"errcode\": {\r",
-											"      \"type\": \"integer\"\r",
-											"    },\r",
-											"    \"msg\": {\r",
-											"      \"type\": \"string\"\r",
-											"    },\r",
-											"    \"data\": {\r",
-											"      \"type\": \"array\",\r",
-											"      \"items\": [\r",
-											"        {\r",
-											"          \"type\": \"object\",\r",
-											"          \"properties\": {\r",
-											"            \"id\": {\r",
-											"              \"type\": \"integer\"\r",
-											"            },\r",
-											"            \"title\": {\r",
-											"              \"type\": \"string\"\r",
-											"            },\r",
-											"            \"memo\": {\r",
-											"              \"type\": \"string\"\r",
-											"            },\r",
-											"            \"min_money\": {\r",
-											"              \"type\": \"string\"\r",
-											"            },\r",
-											"            \"max_money\": {\r",
-											"              \"type\": \"string\"\r",
-											"            }\r",
-											"          },\r",
-											"          \"required\": [\r",
-											"            \"id\",\r",
-											"            \"title\",\r",
-											"            \"memo\",\r",
-											"            \"min_money\",\r",
-											"            \"max_money\"\r",
-											"          ]\r",
-											"        },\r",
-											"        {\r",
-											"          \"type\": \"object\",\r",
-											"          \"properties\": {\r",
-											"            \"id\": {\r",
-											"              \"type\": \"integer\"\r",
-											"            },\r",
-											"            \"title\": {\r",
-											"              \"type\": \"string\"\r",
-											"            },\r",
-											"            \"memo\": {\r",
-											"              \"type\": \"string\"\r",
-											"            },\r",
-											"            \"min_money\": {\r",
-											"              \"type\": \"string\"\r",
-											"            },\r",
-											"            \"max_money\": {\r",
-											"              \"type\": \"string\"\r",
-											"            }\r",
-											"          },\r",
-											"          \"required\": [\r",
-											"            \"id\",\r",
-											"            \"title\",\r",
-											"            \"memo\",\r",
-											"            \"min_money\",\r",
-											"            \"max_money\"\r",
-											"          ]\r",
-											"        }\r",
-											"      ]\r",
-											"    }\r",
-											"  },\r",
-											"  \"required\": [\r",
-											"    \"errcode\",\r",
-											"    \"msg\",\r",
-											"    \"data\"\r",
-											"  ]\r",
-											"}\r",
-											"var json = pm.response.json()\r",
-											"pm.test(\"Schema for positive flow is valid\", function(){\r",
-											"    var result =tv4.validateMultiple(json, schemapositive);\r",
-											"    //console.log(\"Schema Validation:\", JSON.stringify(result));\r",
-											"    //console.log(\"Schema Validation:\",result);\r",
-											"    for(var i =0; i<result.errors.length;i++){\r",
-											"        console.log(\" ERROR :\"+ result.errors[i].message, \"\\n\", \" SCHEMA PATH :\"+ result.errors[i].schemaPath, \"\\n\", \" DATA PATH :\"+ result.errors[i].dataPath);    \r",
-											"    }\r",
-											"    pm.expect(tv4.validate(json, schemapositive)).to.be.true;\r",
-											"}\r",
-											")\r",
-											"}\r",
-											""
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{evo_token}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept-Language",
-										"value": "en",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{FC_hostname}}/chong-zhi/activity/list",
-									"host": [
-										"{{FC_hostname}}"
-									],
-									"path": [
-										"chong-zhi",
-										"activity",
-										"list"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Update Profile",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"if (pm.response.code === 200) {\r",
-									"// Test Flow Validation\r",
-									"var jsonData = pm.response.json();\r",
-									"if (jsonData.errcode === 0){\r",
-									"//Positive Flow\r",
-									"pm.test(\"Test pass with positive flow\", () =>{\r",
-									"    pm.expect(jsonData.msg).to.eql(\"success\");\r",
-									"})\r",
-									"}\r",
-									"else if (jsonData.errcode === 1){\r",
-									"//Negative Flow\r",
-									"pm.test(\"ERROR: negative flow detected\", () =>{\r",
-									"    pm.expect(jsonData.msg).to.eql(\"success\");\r",
-									"})\r",
-									"}\r",
-									"// TEST CASE 1: Schema Validation\r",
-									"//Check the schema for positive flow\r",
-									"var schemapositive =\r",
-									"{\r",
-									"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
-									"  \"type\": \"object\",\r",
-									"  \"properties\": {\r",
-									"    \"errcode\": {\r",
-									"      \"type\": \"integer\"\r",
-									"    },\r",
-									"    \"msg\": {\r",
-									"      \"type\": \"string\"\r",
-									"    },\r",
-									"    \"data\": {\r",
-									"      \"type\": \"object\",\r",
-									"      \"properties\": {\r",
-									"        \"user\": {\r",
-									"          \"type\": \"object\",\r",
-									"          \"properties\": {\r",
-									"            \"access_token\": {\r",
-									"              \"type\": \"string\"\r",
-									"            },\r",
-									"            \"bian_hao\": {\r",
-									"              \"type\": \"string\"\r",
-									"            },\r",
-									"            \"xing_ming\": {\r",
-									"              \"type\": \"string\"\r",
-									"            },\r",
-									"            \"tui_jian_ren\": {\r",
-									"              \"type\": \"string\"\r",
-									"            },\r",
-									"            \"re_nums\": {\r",
-									"              \"type\": \"integer\"\r",
-									"            },\r",
-									"            \"zhang_hu_1\": {\r",
-									"              \"type\": \"string\"\r",
-									"            },\r",
-									"            \"zhang_hu_2\": {\r",
-									"              \"type\": \"string\"\r",
-									"            },\r",
-									"            \"zhang_hu_3\": {\r",
-									"              \"type\": \"string\"\r",
-									"            },\r",
-									"            \"shou_ji\": {\r",
-									"              \"type\": \"string\"\r",
-									"            },\r",
-									"            \"email\": {\r",
-									"              \"type\": \"string\"\r",
-									"            },\r",
-									"            \"is_daili\": {\r",
-									"              \"type\": \"integer\"\r",
-									"            }\r",
-									"          },\r",
-									"          \"required\": [\r",
-									"            \"access_token\",\r",
-									"            \"bian_hao\",\r",
-									"            \"xing_ming\",\r",
-									"            \"tui_jian_ren\",\r",
-									"            \"re_nums\",\r",
-									"            \"zhang_hu_1\",\r",
-									"            \"zhang_hu_2\",\r",
-									"            \"zhang_hu_3\",\r",
-									"            \"shou_ji\",\r",
-									"            \"email\",\r",
-									"            \"is_daili\"\r",
-									"          ]\r",
-									"        }\r",
-									"      },\r",
-									"      \"required\": [\r",
-									"        \"user\"\r",
-									"      ]\r",
-									"    }\r",
-									"  },\r",
-									"  \"required\": [\r",
-									"    \"errcode\",\r",
-									"    \"msg\",\r",
-									"    \"data\"\r",
-									"  ]\r",
-									"}\r",
-									"var json = pm.response.json()\r",
-									"pm.test(\"Schema for positive flow is valid\", function(){\r",
-									"    var result =tv4.validateMultiple(json, schemapositive);\r",
-									"    //console.log(\"Schema Validation:\", JSON.stringify(result));\r",
-									"    //console.log(\"Schema Validation:\",result);\r",
-									"    for(var i =0; i<result.errors.length;i++){\r",
-									"        console.log(\" ERROR :\"+ result.errors[i].message, \"\\n\", \" SCHEMA PATH :\"+ result.errors[i].schemaPath, \"\\n\", \" DATA PATH :\"+ result.errors[i].dataPath);    \r",
-									"    }\r",
-									"    pm.expect(tv4.validate(json, schemapositive)).to.be.true;\r",
-									"}\r",
-									")\r",
-									"}\r",
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{evo_token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n\t\"UpdateProfile\": {\r\n\t\t\"xing_ming\": \"playerA\",\r\n\t\t\"shou_ji\": \"{{$randomPhoneNumber}}\",\r\n\t\t\"email\": \"{{$randomEmail}}\"\r\n\t}\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{FC_hostname}}/hui-yuan/default/update-profile",
-							"host": [
-								"{{FC_hostname}}"
-							],
-							"path": [
-								"hui-yuan",
-								"default",
-								"update-profile"
 							]
 						}
 					},
@@ -5887,7 +5926,7 @@
 									"listen": "prerequest",
 									"script": {
 										"exec": [
-											"postman.setNextRequest(\"hui-yuan/default/huo-qu-xin-xi\");"
+											""
 										],
 										"type": "text/javascript"
 									}
