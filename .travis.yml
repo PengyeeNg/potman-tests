@@ -4,6 +4,9 @@ node_js:
 #dist: trusty
 os: windows
 
+before_install:
+  - npm init -f
+
 install:
   - npm install newman
 
@@ -12,7 +15,7 @@ install:
   #- node --version
   #- npm --version
   #- node_modules/.bin/newman --version
-  - npm init -y
+
 
 script:
   - node_modules/.bin/newman run tests/Frontend_Calls.postman_collection.json -e tests/aliyun_staging.postman_environment.json
