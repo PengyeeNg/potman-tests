@@ -13,7 +13,7 @@ install:
   #- node_modules/.bin/newman --version
 
 script:
-  - newman run tests/Frontend_Calls.postman_collection.json -e tests/aliyun_staging.postman_environment.json
+  - - C:\Users\Lenovo\newman run tests\Frontend_Calls.postman_collection.json -e tests\aliyun_staging.postman_environment.json
 
 # deploy:
   # provider: script
