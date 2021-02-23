@@ -3,9 +3,9 @@ node_js:
   - '14.15.5'
 dist: trusty
 os: windows
+cd: C:\Users\Lenovo\postmanci
 
 install:
-  - npm init
   - npm install newman
 
 #before_script:
