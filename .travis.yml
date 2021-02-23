@@ -3,9 +3,6 @@ node_js:
   - '14.15.5'
 #dist: trusty
 os: windows
-cache:
-    directories:
-     - C:\Users\Lenovo
 
 install:
   - npm install newman
@@ -14,6 +11,7 @@ install:
   #- node --version
   #- npm --version
   #- node_modules/.bin/newman --version
+  - npm init -y
 
 script:
   - node_modules/.bin/newman run tests/Frontend_Calls.postman_collection.json -e tests/aliyun_staging.postman_environment.json
